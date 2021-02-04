@@ -24,17 +24,14 @@ g_vmu_msg = Float64()
 g_imu_msg = Imu()
 
 ############################################################################
-# vmu reaad function
+# vmu Accelerometers reaad function
 ############################################################################
-
-
-def vmuFuc():
+def VmuAccelerometersFuc():
     
     while 1:
         vmu_ser = np.zeros((50), dtype=np.int)
         loop = 0
         while 1:
-            loop = 0
             try:
                 input_data = int(g_ser_vmu.read().encode('hex'), 16)
                 # en_data = int(input_data.encode('hex'))
@@ -54,19 +51,99 @@ def vmuFuc():
             loop += 1
             if(input_data == 0x04):
                 break
-        if(vmu_ser[2] == ord('q')):  # 7
-            quate_w = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
-            quate_x = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
-            quate_y = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
-            quate_z = struct.unpack('>f', bytearray(list(vmu_ser[19:23])))[0]
-            if(quate_w != 0.0 and quate_x != 0.0 and quate_y != 0.0 and quate_z != 0.0):
+        if(vmu_ser[2] == ord('q')):
+            vmu_x = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
+            vmu_y = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
+            vmu_z = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
+            if(vmu_x != 0.0 and vmu_y != 0.0 and vmu_z != 0.0):
                 break
+
+    return vmu_x, vmu_y, vmu_z
+
+############################################################################
+# vmu Gyroscopes reaad function
+############################################################################
+def VmuGyroscopesFuc():
+    
+    while 1:
+        vmu_ser = np.zeros((50), dtype=np.int)
+        loop = 0
+        while 1:
+            try:
+                input_data = int(g_ser_vmu.read().encode('hex'), 16)
+                # en_data = int(input_data.encode('hex'))
+            except:
+                input_data = 0
+            if(input_data == 0x01):
+                vmu_ser[loop] = input_data
+                loop += 1
+                break
+        while 1:
+            try:
+                input_data = int(g_ser_vmu.read().encode('hex'), 16)
+                # en_data = int(input_data.encode('hex'))
+            except:
+                input_data = 0
+            vmu_ser[loop] = input_data
+            loop += 1
+            if(input_data == 0x04):
+                break
+        if(vmu_ser[2] == ord('q')):
+            vmu_x = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
+            vmu_y = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
+            vmu_z = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
+            if(vmu_x != 0.0 and vmu_y != 0.0 and vmu_z != 0.0):
+                break
+
+    return vmu_x, vmu_y, vmu_z
+
+############################################################################
+# vmu Quaternions reaad function
+############################################################################
+def VmuQuaternionsFuc():
+    
+    while 1:
+        vmu_ser = np.zeros((50), dtype=np.int)
+        loop = 0
+        while 1:
+            try:
+                input_data = int(g_ser_vmu.read().encode('hex'), 16)
+                # en_data = int(input_data.encode('hex'))
+            except:
+                input_data = 0
+            if(input_data == 0x01):
+                vmu_ser[loop] = input_data
+                loop += 1
+                break
+        while 1:
+            try:
+                input_data = int(g_ser_vmu.read().encode('hex'), 16)
+                # en_data = int(input_data.encode('hex'))
+            except:
+                input_data = 0
+            vmu_ser[loop] = input_data
+            loop += 1
+            if(input_data == 0x04):
+                break
+        if(vmu_ser[2] == ord('q')):
+            vmu_w = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
+            vmu_x = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
+            vmu_y = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
+            vmu_z = struct.unpack('>f', bytearray(list(vmu_ser[19:23])))[0]
+            if(vmu_w != 0.0 and vmu_x != 0.0 and vmu_y != 0.0 and vmu_z != 0.0):
+                break
+
+    return vmu_w, vmu_x, vmu_y, vmu_z
+
+############################################################################
+# vmu Euler reaad function
+############################################################################
+def VmuEulerFuc():
 
     while 1:
         vmu_ser = np.zeros((50), dtype=np.int)
         loop = 0
         while 1:
-            loop = 0
             try:
                 input_data = int(g_ser_vmu.read().encode('hex'), 16)
                 # en_data = int(input_data.encode('hex'))
@@ -86,15 +163,14 @@ def vmuFuc():
             loop += 1
             if(input_data == 0x04):
                 break
-        if(vmu_ser[2] == ord('e')):  # 7
-            euler_x = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
-            euler_y = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
-            euler_z = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
-            if(euler_x != 0.0 and euler_y != 0.0 and euler_z != 0.0):
+        if(vmu_ser[2] == ord('e')):
+            vmu_x = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
+            vmu_y = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
+            vmu_z = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
+            if(vmu_x != 0.0 and vmu_y != 0.0 and vmu_z != 0.0):
                 break
 
-    return quate_w, quate_x, quate_y, quate_z, euler_x, euler_y, euler_z
-
+    return vmu_x, vmu_y, vmu_z
 
 ##############################################################################
 # vmu talker node
@@ -110,8 +186,10 @@ def vmu_talker():
     rospy.init_node('vmu_talker', anonymous=True)
     # rate = rospy.Rate(100)  # 10hz
     while not rospy.is_shutdown():
-
-        quate_w, quate_x, quate_y, quate_z, euler_x, euler_y, euler_z = vmuFuc()
+        acc_x, acc_y, acc_z = VmuAccelerometersFuc()
+        gyro_x, gyro_y, gyro_z = VmuGyroscopesFuc()
+        quate_w, quate_x, quate_y, quate_z = VmuQuaternionsFuc()
+        euler_x, euler_y, euler_z = VmuEulerFuc()
         # print('euler_x:%.4f euler_y:%.4f euler_z:%.4f'%(euler_x, euler_y, euler_z))
 
         g_vmu_msg = euler_z
@@ -123,12 +201,12 @@ def vmu_talker():
         g_imu_msg.orientation.y = quate_y
         g_imu_msg.orientation.z = quate_z
         g_imu_msg.orientation.w = quate_w
-        g_imu_msg.linear_acceleration.x = 0
-        g_imu_msg.linear_acceleration.y = 0
-        g_imu_msg.linear_acceleration.z = 0
-        g_imu_msg.angular_velocity.x = 0
-        g_imu_msg.angular_velocity.y = 0
-        g_imu_msg.angular_velocity.z = 0
+        g_imu_msg.linear_acceleration.x = acc_x
+        g_imu_msg.linear_acceleration.y = acc_y
+        g_imu_msg.linear_acceleration.z = acc_z
+        g_imu_msg.angular_velocity.x = gyro_x
+        g_imu_msg.angular_velocity.y = gyro_y
+        g_imu_msg.angular_velocity.z = gyro_z
 
         pub.publish(g_imu_msg)
 
