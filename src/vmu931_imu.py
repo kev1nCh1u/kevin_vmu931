@@ -193,7 +193,7 @@ def vmu_talker():
         # print('euler_x:%.4f euler_y:%.4f euler_z:%.4f'%(euler_x, euler_y, euler_z))
 
         g_vmu_msg = euler_z
-        print(g_vmu_msg)
+        # print(g_vmu_msg)
 
         g_imu_msg.header.stamp = rospy.Time.now()
         g_imu_msg.header.frame_id = "base_link"

@@ -1,0 +1,8 @@
+<launch>
+
+  <node name="vmu931" pkg="vmu931" type="vmu931_imu.py"
+  args="/dev/ttyACM0 115200" output="screen"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find vmu931)/vmu.rviz" />
+</launch>
