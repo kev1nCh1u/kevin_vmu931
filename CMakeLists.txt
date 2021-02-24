@@ -117,7 +117,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+ include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -215,3 +215,26 @@ catkin_install_python(PROGRAMS src/vmu931_yaw.py
 catkin_install_python(PROGRAMS src/vmu931_imu.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+################
+## vmu931_cpp
+################
+add_executable(vmu931_read_all src/vmu931-read-all.c src/vmu931.c)
+
+target_link_libraries(vmu931_read_all 
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(vmu931_read_all vmu931_read_all)
+
+################
+## test
+################
+add_executable(testqq src/test.cpp)
+
+target_link_libraries(testqq 
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(testqq testqq)
+

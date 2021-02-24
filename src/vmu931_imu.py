@@ -29,6 +29,7 @@ g_imu_msg = Imu()
 def VmuAccelerometersFuc():
     
     while 1:
+        print('test')
         vmu_ser = np.zeros((50), dtype=np.int)
         loop = 0
         while 1:
@@ -51,7 +52,7 @@ def VmuAccelerometersFuc():
             loop += 1
             if(input_data == 0x04):
                 break
-        if(vmu_ser[2] == ord('q')):
+        if(vmu_ser[2] == ord('a')):
             vmu_x = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
             vmu_y = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
             vmu_z = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
@@ -88,7 +89,7 @@ def VmuGyroscopesFuc():
             loop += 1
             if(input_data == 0x04):
                 break
-        if(vmu_ser[2] == ord('q')):
+        if(vmu_ser[2] == ord('g')):
             vmu_x = struct.unpack('>f', bytearray(list(vmu_ser[7:11])))[0]
             vmu_y = struct.unpack('>f', bytearray(list(vmu_ser[11:15])))[0]
             vmu_z = struct.unpack('>f', bytearray(list(vmu_ser[15:19])))[0]
@@ -186,17 +187,21 @@ def vmu_talker():
     rospy.init_node('vmu_talker', anonymous=True)
     # rate = rospy.Rate(100)  # 10hz
     while not rospy.is_shutdown():
+        print("catching data...")
         acc_x, acc_y, acc_z = VmuAccelerometersFuc()
+        print('acc_x:%.4f acc_y:%.4f acc_z:%.4f'%(acc_x, acc_y, acc_z))
         gyro_x, gyro_y, gyro_z = VmuGyroscopesFuc()
+        print('gyro_x:%.4f gyro_y:%.4f gyro_z:%.4f'%(gyro_x, gyro_y, gyro_z))
         quate_w, quate_x, quate_y, quate_z = VmuQuaternionsFuc()
+        print('quate_w:%.4f quate_x:%.4f quate_y:%.4f quate_z:%.4f'%(quate_w, quate_x, quate_y, quate_z))
         euler_x, euler_y, euler_z = VmuEulerFuc()
-        # print('euler_x:%.4f euler_y:%.4f euler_z:%.4f'%(euler_x, euler_y, euler_z))
+        print('euler_x:%.4f euler_y:%.4f euler_z:%.4f'%(euler_x, euler_y, euler_z))
 
         g_vmu_msg = euler_z
         # print(g_vmu_msg)
 
         g_imu_msg.header.stamp = rospy.Time.now()
-        g_imu_msg.header.frame_id = "base_link"
+        g_imu_msg.header.frame_id = "imu_link"
         g_imu_msg.orientation.x = quate_x
         g_imu_msg.orientation.y = quate_y
         g_imu_msg.orientation.z = quate_z
@@ -204,9 +209,9 @@ def vmu_talker():
         g_imu_msg.linear_acceleration.x = acc_x
         g_imu_msg.linear_acceleration.y = acc_y
         g_imu_msg.linear_acceleration.z = acc_z
-        g_imu_msg.angular_velocity.x = gyro_x
-        g_imu_msg.angular_velocity.y = gyro_y
-        g_imu_msg.angular_velocity.z = gyro_z
+        g_imu_msg.angular_velocity.x =    gyro_x
+        g_imu_msg.angular_velocity.y =    gyro_y
+        g_imu_msg.angular_velocity.z =    gyro_z
 
         pub.publish(g_imu_msg)
 
@@ -249,7 +254,7 @@ if __name__ == '__main__':
         # rospy.loginfo()
         while 1:
             continue
-
+    print("serial connect")
     try:
         vmu_talker()
     except rospy.ROSInterruptException:
