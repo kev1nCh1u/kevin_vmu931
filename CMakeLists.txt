@@ -219,7 +219,7 @@ catkin_install_python(PROGRAMS src/vmu931_imu.py
 ################
 ## vmu931_cpp
 ################
-add_executable(vmu931_read_all src/vmu931-read-all.c src/vmu931.c)
+add_executable(vmu931_read_all src/vmu931-read-all.cpp src/vmu931.c)
 
 target_link_libraries(vmu931_read_all 
   ${catkin_LIBRARIES}
