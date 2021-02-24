@@ -128,6 +128,14 @@ int main(int argc, char **argv)
         	imu_msg.orientation.y = data.quat[i].y;
         	imu_msg.orientation.z = data.quat[i].z;
         	imu_msg.orientation.w = data.quat[i].w;
+
+			// imu_msg.linear_acceleration.x = data.quat[i].x; //bug
+        	// imu_msg.linear_acceleration.y = data.quat[i].y; //bug
+        	// imu_msg.linear_acceleration.z = data.quat[i].z; //bug
+
+			// imu_msg.angular_velocity.x = data.quat[i].x;  //bug
+        	// imu_msg.angular_velocity.y = data.quat[i].y;  //bug
+        	// imu_msg.angular_velocity.z = data.quat[i].z;  //bug
 		}
 
 		for(int i=0;i<data.size.gyro;++i)
