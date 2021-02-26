@@ -68,7 +68,7 @@ Visualization Manager:
         Acc. vector color: 255; 0; 0
         Acc. vector scale: 1
         Derotate acceleration: true
-        Enable acceleration: false
+        Enable acceleration: true
       Axes properties:
         Axes scale: 1.5
         Enable axes: true
