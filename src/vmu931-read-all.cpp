@@ -116,9 +116,9 @@ int main(int argc, char **argv)
 		for(int i=0;i<data.size.accel;++i)
 		{
 			printf("[accel] t=%u x=%f y=%f z=%f\n", data.accel[i].timestamp_ms, data.accel[i].x, data.accel[i].y, data.accel[i].z);
-			imu_msg.linear_acceleration.x = data.accel[i].x;
-        	imu_msg.linear_acceleration.y = data.accel[i].y;
-        	imu_msg.linear_acceleration.z = data.accel[i].z;
+			imu_msg.linear_acceleration.x = data.accel[i].x * 3.14/180;
+        	imu_msg.linear_acceleration.y = data.accel[i].y * 3.14/180;
+        	imu_msg.linear_acceleration.z = data.accel[i].z * 3.14/180;
 		}
 
 		for(int i=0;i<data.size.quat;++i)
@@ -141,9 +141,9 @@ int main(int argc, char **argv)
 		for(int i=0;i<data.size.gyro;++i)
 		{
 			printf("[gyro] t=%u x=%f y=%f z=%f\n", data.gyro[i].timestamp_ms, data.gyro[i].x, data.gyro[i].y, data.gyro[i].z);
-			imu_msg.angular_velocity.x = data.gyro[i].x;
-        	imu_msg.angular_velocity.y = data.gyro[i].y;
-        	imu_msg.angular_velocity.z = data.gyro[i].z;
+			imu_msg.angular_velocity.x = data.gyro[i].x  * 3.14/180;
+        	imu_msg.angular_velocity.y = data.gyro[i].y  * 3.14/180;
+        	imu_msg.angular_velocity.z = data.gyro[i].z  * 3.14/180;
 		}
 
 		//terminate after reading MAX_READS times
