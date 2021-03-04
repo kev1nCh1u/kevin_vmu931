@@ -42,6 +42,10 @@ const int MAX_READS=1000;
 
 int main(int argc, char **argv)
 {
+	const double pi = std::acos(-1.0);
+    const double g = 9.81; // m/s^2
+    const double dps = pi / 180.0;
+
 	// imu_msg = Imu();
 	sensor_msgs::Imu imu_msg;
 
@@ -113,14 +117,6 @@ int main(int argc, char **argv)
 		for(int i=0;i<data.size.mag;++i)
 			printf("[mag] t=%u x=%f y=%f z=%f\n", data.mag[i].timestamp_ms, data.mag[i].x, data.mag[i].y, data.mag[i].z);
 
-		for(int i=0;i<data.size.accel;++i)
-		{
-			printf("[accel] t=%u x=%f y=%f z=%f\n", data.accel[i].timestamp_ms, data.accel[i].x, data.accel[i].y, data.accel[i].z);
-			imu_msg.linear_acceleration.x = data.accel[i].x * 3.14/180;
-        	imu_msg.linear_acceleration.y = data.accel[i].y * 3.14/180;
-        	imu_msg.linear_acceleration.z = data.accel[i].z * 3.14/180;
-		}
-
 		for(int i=0;i<data.size.quat;++i)
 		{
 			printf("[quat] t=%u w=%f x=%f y=%f z=%f\n", data.quat[i].timestamp_ms, data.quat[i].w, data.quat[i].x, data.quat[i].y, data.quat[i].z);
@@ -141,10 +137,22 @@ int main(int argc, char **argv)
 		for(int i=0;i<data.size.gyro;++i)
 		{
 			printf("[gyro] t=%u x=%f y=%f z=%f\n", data.gyro[i].timestamp_ms, data.gyro[i].x, data.gyro[i].y, data.gyro[i].z);
-			imu_msg.angular_velocity.x = data.gyro[i].x  * 3.14/180;
-        	imu_msg.angular_velocity.y = data.gyro[i].y  * 3.14/180;
-        	imu_msg.angular_velocity.z = data.gyro[i].z  * 3.14/180;
+			imu_msg.angular_velocity.x = data.gyro[i].x * dps;
+        	imu_msg.angular_velocity.y = data.gyro[i].y * dps;
+        	imu_msg.angular_velocity.z = data.gyro[i].z * dps;
 		}
+
+		for(int i=0;i<data.size.accel;++i)
+		{
+			printf("[accel] t=%u x=%f y=%f z=%f\n", data.accel[i].timestamp_ms, data.accel[i].x, data.accel[i].y, data.accel[i].z);
+			imu_msg.linear_acceleration.x = data.accel[i].x * g;
+        	imu_msg.linear_acceleration.y = data.accel[i].y * g;
+        	imu_msg.linear_acceleration.z = data.accel[i].z * g;
+		}
+
+		// imu_msg.orientation_covariance={1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e-6};
+    	// imu_msg.angular_velocity_covariance={1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e-6};
+    	// imu_msg.linear_acceleration_covariance = {1e-3,0,0,0,1e-3,0,0,0,1e-3};
 
 		//terminate after reading MAX_READS times
 		//remove those lines if you want to read infinitely

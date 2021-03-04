@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(vmu931)
+project(kevin_vmu931)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -105,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES vmu931
+#  LIBRARIES kevin_vmu931
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
@@ -123,7 +123,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/vmu931.cpp
+#   src/${PROJECT_NAME}/kevin_vmu931.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -134,7 +134,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/vmu931_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/kevin_vmu931_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -198,7 +198,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_vmu931.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_kevin_vmu931.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
@@ -207,7 +207,7 @@ include_directories(
 # catkin_add_nosetests(test)
 
 ################
-## vmu931_py  ##
+## kevin_vmu931_py  ##
 ################
 catkin_install_python(PROGRAMS src/vmu931_yaw.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

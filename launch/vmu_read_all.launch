@@ -1,6 +1,0 @@
-<launch>
-
-  <node name="vmu931" pkg="vmu931" type="vmu931_read_all"
-  args="/dev/ttyACM0" output="screen"/>
-
-</launch>

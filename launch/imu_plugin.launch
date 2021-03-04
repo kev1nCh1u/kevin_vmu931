@@ -1,6 +1,6 @@
 <launch>
 
-  <node name="vmu931" pkg="vmu931" type="vmu931_imu.py"
+  <node name="vmu931" pkg="kevin_vmu931" type="vmu931_imu.py"
   args="/dev/ttyACM0 115200" output="screen"/>
 
 </launch>
